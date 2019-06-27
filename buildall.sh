@@ -1,0 +1,1 @@
+docker build -t xiazemin/docker-multi-stage-demo:latest .

@@ -1,0 +1,388 @@
+$ sh build.sh
+Building xiazemin/docker-multi-stage-demo:build
+Sending build context to Docker daemon  9.953MB
+Step 1/6 : FROM golang
+ ---> 9fe4cdc1f173
+Step 2/6 : WORKDIR /go/src/app
+ ---> Running in 7e9fd830ce42
+Removing intermediate container 7e9fd830ce42
+ ---> fe439074f678
+Step 3/6 : ADD . /go/src/app
+ ---> 411593d88f1c
+Step 4/6 : RUN go get -u -v github.com/kardianos/govendor
+ ---> Running in 1d1ef0101f99
+github.com/kardianos/govendor (download)
+github.com/kardianos/govendor/prompt
+github.com/kardianos/govendor/vendor/golang.org/x/sys/unix
+github.com/kardianos/govendor/vendor/github.com/dchest/safefile
+github.com/kardianos/govendor/internal/pathos
+github.com/kardianos/govendor/internal/vos
+github.com/kardianos/govendor/internal/vfilepath
+github.com/kardianos/govendor/pkgspec
+github.com/kardianos/govendor/vcs
+github.com/kardianos/govendor/vendorfile
+github.com/kardianos/govendor/vendor/github.com/pkg/errors
+github.com/kardianos/govendor/vendor/golang.org/x/tools/go/vcs
+github.com/kardianos/govendor/vendor/github.com/Bowery/prompt
+github.com/kardianos/govendor/context
+github.com/kardianos/govendor/cliprompt
+github.com/kardianos/govendor/vendor/gopkg.in/yaml.v2
+github.com/kardianos/govendor/vendor/github.com/google/shlex
+github.com/kardianos/govendor/migrate
+github.com/kardianos/govendor/help
+github.com/kardianos/govendor/run
+github.com/kardianos/govendor
+Removing intermediate container 1d1ef0101f99
+ ---> 3b42c182d730
+Step 5/6 : RUN govendor sync
+ ---> Running in 1e27dd9b4ac8
+Removing intermediate container 1e27dd9b4ac8
+ ---> cf391462136e
+Step 6/6 : RUN GOOS=linux GOARCH=386 go build -v -o /go/src/app/app-server
+ ---> Running in 7f728721135a
+errors
+internal/race
+internal/cpu
+runtime/internal/atomic
+runtime/internal/sys
+runtime/internal/math
+sync/atomic
+internal/bytealg
+unicode
+runtime
+unicode/utf8
+crypto/subtle
+math/bits
+math
+strconv
+encoding
+internal/testlog
+unicode/utf16
+container/list
+crypto/internal/subtle
+crypto/rc4
+internal/x/crypto/cryptobyte/asn1
+internal/nettrace
+internal/x/net/dns/dnsmessage
+sync
+reflect
+io
+bytes
+bufio
+syscall
+time
+encoding/binary
+encoding/base64
+sort
+internal/fmtsort
+internal/poll
+internal/syscall/unix
+strings
+os
+hash
+hash/crc32
+crypto/cipher
+fmt
+path/filepath
+io/ioutil
+crypto/aes
+encoding/xml
+encoding/json
+compress/flate
+context
+math/rand
+math/big
+compress/gzip
+crypto
+crypto/des
+crypto/internal/randutil
+crypto/sha512
+crypto/hmac
+crypto/md5
+crypto/sha1
+crypto/sha256
+encoding/hex
+encoding/pem
+internal/singleflight
+net
+crypto/rand
+crypto/elliptic
+encoding/asn1
+crypto/ecdsa
+crypto/rsa
+crypto/dsa
+crypto/x509/pkix
+internal/x/crypto/cryptobyte
+net/url
+internal/x/crypto/internal/chacha20
+internal/x/crypto/poly1305
+internal/x/crypto/chacha20poly1305
+crypto/x509
+internal/x/crypto/curve25519
+internal/x/crypto/hkdf
+internal/x/text/transform
+log
+internal/x/text/unicode/bidi
+crypto/tls
+internal/x/text/secure/bidirule
+internal/x/text/unicode/norm
+internal/x/net/idna
+net/textproto
+internal/x/net/http/httpguts
+internal/x/net/http/httpproxy
+internal/x/net/http2/hpack
+mime
+mime/quotedprintable
+net/http/httptrace
+net/http/internal
+mime/multipart
+path
+app/vendor/github.com/gin-gonic/gin/internal/json
+net/http
+app/vendor/github.com/golang/protobuf/proto
+encoding/gob
+html
+text/template/parse
+text/template
+app/vendor/github.com/gin-contrib/sse
+regexp/syntax
+html/template
+regexp
+net/rpc
+app/vendor/gopkg.in/go-playground/validator.v8
+app/vendor/github.com/ugorji/go/codec
+app/vendor/gopkg.in/yaml.v2
+app/vendor/golang.org/x/sys/unix
+app/vendor/github.com/mattn/go-isatty
+net/http/httputil
+app/vendor/github.com/gin-gonic/gin/render
+app/vendor/github.com/gin-gonic/gin/binding
+app/vendor/github.com/gin-gonic/gin
+app
+Removing intermediate container 7f728721135a
+ ---> 4267a96fa458
+Successfully built 4267a96fa458
+Successfully tagged xiazemin/docker-multi-stage-demo:build
+ea7284b4eb9001bfc714ecea264003bad89de1fd0c5f003a25fccfa2499caecb
+extract
+Building xiazemin/docker-multi-stage-demo:old
+Sending build context to Docker daemon  23.48MB
+Step 1/6 : FROM alpine:latest
+latest: Pulling from library/alpine
+921b31ab772b: Pull complete
+Digest: sha256:ca1c944a4f8486a153024d9965aafbe24f5723c1d5c02f4964c045a16d19dc54
+Status: Downloaded newer image for alpine:latest
+ ---> 4d90542f0623
+Step 2/6 : RUN apk add -U tzdata
+ ---> Running in 24f89e45746d
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+(1/1) Installing tzdata (2019a-r0)
+Executing busybox-1.30.1-r2.trigger
+OK: 9 MiB in 15 packages
+Removing intermediate container 24f89e45746d
+ ---> 096124727ac6
+Step 3/6 : RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+ ---> Running in d1651c520250
+Removing intermediate container d1651c520250
+ ---> d89a83601294
+Step 4/6 : WORKDIR /root/
+ ---> Running in d6f5fdb706df
+Removing intermediate container d6f5fdb706df
+ ---> 64e4a7f72522
+Step 5/6 : COPY app-server .
+ ---> f83734a48ac4
+Step 6/6 : CMD ["./app-server"]
+ ---> Running in 02477995ff95
+Removing intermediate container 02477995ff95
+ ---> bbd9114caa50
+Successfully built bbd9114caa50
+Successfully tagged xiazemin/docker-multi-stage-demo:old
+
+
+
+
+
+$ sh buildall.sh
+Sending build context to Docker daemon  9.961MB
+Step 1/12 : FROM golang AS build-env
+ ---> 9fe4cdc1f173
+Step 2/12 : ADD . /go/src/app
+ ---> 0bf20b54914d
+Step 3/12 : WORKDIR /go/src/app
+ ---> Running in dd601709efff
+Removing intermediate container dd601709efff
+ ---> fca49e1f5e42
+Step 4/12 : RUN go get -u -v github.com/kardianos/govendor
+ ---> Running in 97674a5501ce
+github.com/kardianos/govendor (download)
+github.com/kardianos/govendor/prompt
+github.com/kardianos/govendor/vendor/golang.org/x/sys/unix
+github.com/kardianos/govendor/vendor/github.com/dchest/safefile
+github.com/kardianos/govendor/internal/pathos
+github.com/kardianos/govendor/internal/vos
+github.com/kardianos/govendor/internal/vfilepath
+github.com/kardianos/govendor/pkgspec
+github.com/kardianos/govendor/vcs
+github.com/kardianos/govendor/vendorfile
+github.com/kardianos/govendor/vendor/github.com/pkg/errors
+github.com/kardianos/govendor/vendor/golang.org/x/tools/go/vcs
+github.com/kardianos/govendor/context
+github.com/kardianos/govendor/vendor/github.com/Bowery/prompt
+github.com/kardianos/govendor/cliprompt
+github.com/kardianos/govendor/vendor/gopkg.in/yaml.v2
+github.com/kardianos/govendor/vendor/github.com/google/shlex
+github.com/kardianos/govendor/migrate
+github.com/kardianos/govendor/help
+github.com/kardianos/govendor/run
+github.com/kardianos/govendor
+Removing intermediate container 97674a5501ce
+ ---> f5c207751e4e
+Step 5/12 : RUN govendor sync
+ ---> Running in 4cc3e83146a5
+Removing intermediate container 4cc3e83146a5
+ ---> bff172d33050
+Step 6/12 : RUN GOOS=linux GOARCH=386 go build -v -o /go/src/app/app-server
+ ---> Running in a87463d84ac0
+errors
+internal/cpu
+internal/race
+runtime/internal/atomic
+internal/bytealg
+runtime/internal/sys
+runtime/internal/math
+sync/atomic
+unicode
+runtime
+unicode/utf8
+crypto/subtle
+math/bits
+math
+strconv
+encoding
+internal/testlog
+unicode/utf16
+container/list
+crypto/internal/subtle
+crypto/rc4
+internal/x/crypto/cryptobyte/asn1
+internal/nettrace
+internal/x/net/dns/dnsmessage
+sync
+io
+reflect
+bytes
+bufio
+syscall
+time
+encoding/binary
+encoding/base64
+sort
+internal/poll
+internal/fmtsort
+internal/syscall/unix
+strings
+os
+hash
+hash/crc32
+crypto/cipher
+fmt
+path/filepath
+io/ioutil
+crypto/aes
+encoding/xml
+encoding/json
+compress/flate
+context
+math/rand
+math/big
+compress/gzip
+crypto
+crypto/des
+crypto/internal/randutil
+crypto/sha512
+crypto/hmac
+crypto/md5
+crypto/sha1
+crypto/sha256
+encoding/hex
+encoding/pem
+internal/singleflight
+net
+crypto/rand
+crypto/elliptic
+encoding/asn1
+crypto/ecdsa
+crypto/rsa
+crypto/dsa
+crypto/x509/pkix
+internal/x/crypto/cryptobyte
+net/url
+internal/x/crypto/internal/chacha20
+internal/x/crypto/poly1305
+internal/x/crypto/chacha20poly1305
+crypto/x509
+internal/x/crypto/curve25519
+internal/x/crypto/hkdf
+internal/x/text/transform
+log
+internal/x/text/unicode/bidi
+crypto/tls
+internal/x/text/secure/bidirule
+internal/x/text/unicode/norm
+internal/x/net/idna
+net/textproto
+internal/x/net/http/httpguts
+internal/x/net/http/httpproxy
+internal/x/net/http2/hpack
+mime
+mime/quotedprintable
+net/http/httptrace
+net/http/internal
+mime/multipart
+path
+app/vendor/github.com/gin-gonic/gin/internal/json
+app/vendor/github.com/golang/protobuf/proto
+net/http
+encoding/gob
+html
+text/template/parse
+text/template
+app/vendor/github.com/gin-contrib/sse
+regexp/syntax
+regexp
+html/template
+app/vendor/gopkg.in/go-playground/validator.v8
+net/rpc
+app/vendor/github.com/ugorji/go/codec
+app/vendor/gopkg.in/yaml.v2
+app/vendor/golang.org/x/sys/unix
+app/vendor/github.com/mattn/go-isatty
+net/http/httputil
+app/vendor/github.com/gin-gonic/gin/render
+app/vendor/github.com/gin-gonic/gin/binding
+app/vendor/github.com/gin-gonic/gin
+app
+Removing intermediate container a87463d84ac0
+ ---> 19a3f483e073
+Step 7/12 : FROM alpine
+ ---> 4d90542f0623
+Step 8/12 : RUN apk add -U tzdata
+ ---> Using cache
+ ---> 096124727ac6
+Step 9/12 : RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
+ ---> Using cache
+ ---> d89a83601294
+Step 10/12 : COPY --from=build-env /go/src/app/app-server /usr/local/bin/app-server
+ ---> 635ac8cd9002
+Step 11/12 : EXPOSE 8080
+ ---> Running in a9d67f9d2feb
+Removing intermediate container a9d67f9d2feb
+ ---> bd07bf32ac02
+Step 12/12 : CMD [ "app-server" ]
+ ---> Running in bdf52c9aca61
+Removing intermediate container bdf52c9aca61
+ ---> a7a8ab7f2115
+Successfully built a7a8ab7f2115
+Successfully tagged xiazemin/docker-multi-stage-demo:latest
+
